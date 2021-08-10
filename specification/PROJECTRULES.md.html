@@ -1,0 +1,498 @@
+
+<!-- saved from url=(0111)http://documentation-doc-server.documentation.svc.cluster.local/specifications/frontend/v1.0/cn/PROJECTRULES.md -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" href="./PROJECTRULES.md_files/modest.css"></head><body><h2>前端项目代码规范</h2>
+<div align="center">
+	<img src="./PROJECTRULES.md_files/icon.jpeg">
+	<br>
+	<div style="margin:auto">
+		<span style="font-size:200%">前端项目代码规范</span>
+	</div>
+</div>
+<h2>描述</h2>
+<p>该文件是前端项目代码规范文件，主要包含了如何对文件已经文件夹进行命名等规范。</p>
+<h2>项目规范</h2>
+<h3>项目结构总览</h3>
+<pre><code>ProjectSample/ .................... 项目目录
+├─ package_backup/ ................ Package.json 备份目录
+├─ public/ ........................ 项目静态文件根目录
+│  ├─ favicon.ico ................. 项目 Favicon
+│  ├─ icon.png .................... 项目 Icon
+│  ├─ index.html .................. 项目生成环境 HTML 文档
+│  └─ indexDev.html ............... 项目开发环境 HTML 文档
+├─ src/ ........................... 项目根目录
+│  ├─ global.d.ts ................. Typescript 第三方包声明文件
+│  ├─ index.tsx ................... 项目index文件
+│  ├─ _test_ ...................... 项目测试根目录
+│  ├─ Assets/ ..................... 项目资源根目录
+│  │  └─ images ................... 项目图片根目录
+│  ├─ Api/ ........................ Api文件根目录
+│  │  ├─ mainDomain.ts ............ 主域名配置文件
+│  │  ├─ redirectDomain.ts ........ 跳转域名配置
+│  │  └─ moduleA.ts ............... moudleA中axios封装文件
+│  ├─ FormSchema/ ................. 页面表单schema根目录
+│  ├─ Components/ ................. 项目公有组建根目录
+│  │  ├─ index.ts ................. 整合项目公有组建出口文件
+│  │  └─ PublicComponentA/ ........ 项目公有组建A目录
+│  │     ├─ index.tsx ............. 项目公有组建A入口文件
+│  │     └─ style.scss ............ 项目公有组建A样式文件
+│  ├─ Util ........................ 项目util文件根目录
+│  ├─ DefaultData ................. 项目默认参数根目录
+│  ├─ Constant/ ................... 项目css公有样式根目录
+│  │  └─ 'name'.scss .............. 公有样式文件
+│  ├─ PageLayouts/ ................ 项目页面布局根目录
+│  │  ├─ index.ts ................. 整合项目页面布局出口文件
+│  │  └─ LayoutA/ ................. 项目页面布局A根目录
+│  │     ├─ index.tsx ............. 项目页面布局A入口文件
+│  │     └─ style.scss ............ 项目页面布局A样式文件
+│  ├─ Pages/ ...................... 项目页面根目录
+│  │  └─ PageA/ ................... 项目页面A根目录
+│  │     ├─ index.tsx ............. 项目页面A入口目录
+│  │     ├─ style.scss ............ 项目页面A样式文件
+│  │     └─ Components/ ........... 项目页面A私有组建根目录
+│  │        └─ PrivateComponentA/ . 项目页面A私有组建根目录
+│  │           ├─ index.tsx ....... 项目页面A私有组建入口文件
+│  │           └─ style.scss ...... 项目页面A私有组建样式文件
+│  ├─ Route/ ...................... 项目路由根目录
+│  │  └─ index.tsx ................ 项目路由文件
+│  └─ Store/ ...................... 项目store根目录
+│     ├─ rootReducer.ts ........... Reducer根文件，整合所有reducer
+│     ├─ rootSaga.ts .............. Saga根文件
+│     ├─ rootStore.ts ............. Store根文件
+│     └─ moduleA/ ................. ModuleA根目录
+│        ├─ actionTypes.ts ........ ModuleA Action Types 文件
+│        ├─ actions.ts ............ ModuleA Actions 文件
+│        ├─ reducer.ts ............ ModuleA Reducer 文件
+│        └─ sagas.ts .............. ModuleA异步请求统一管理文件
+├─ webpackConfig/ ................. Webpack根目录
+│  ├─ webpack.common.js ........... Webpack通用配置文件
+│  ├─ webpack.dev.js .............. Webpack开发环境配置文件
+│  └─ webpack.prod.js ............. Webpack生成环境配置文件
+├─ .babelrc ....................... Presets 和 Plugins 配置文件
+├─ .eslintignore .................. ESLint忽略配置文件
+├─ .eslintrc.js ................... Typescript语法检测配置文件
+├─ .prettierrc.js ................. 代码格式化配置文件
+├─ package.json ................... package.json
+├─ postcss.config.js .............. 项目postcss配置文件
+└─ tsconfig.json .................. typescirpt编译规范配置文件。
+
+
+</code></pre>
+<h3>项目文件夹命名规范</h3>
+<hr>
+<p>项目中的所有文件夹命名方法均使用大驼峰式命名方法。</p>
+<h3>项目文件命名规范</h3>
+<hr>
+<p>项目中所有的文件命名均以驼峰式命名方式进行命名，只有当特殊情况下，组件需要单独拆离出 index.tsx，这时候文件的命名需要用大写字母开头。</p>
+<h3>公共和私有组件以及布局命名规则</h3>
+<hr>
+<p>组件或布局将在多个组件中使用，例如页面布局或页面。 通用命名约定将是根据组件或布局的 ui 的名字，然后紧跟其功能的名字，依此类推，例如，有一个<code>button</code>将从数据库<code>fetch``userData</code>, 我们可以将其命名为<code>ButtonFetchUserData</code>，同时，您需要确保组件文件夹和组件名称相同。</p>
+<h3>CSS 中 class 和 id 命名规范</h3>
+<hr>
+<p>通常，我们会使用 BEM 命名约定来命名项目 CSS 类和 ID。 但是，因为项目中的所有类和 ID 名称都已被哈希处理。 我们将使用以下方法在项目中命名类和 id</p>
+<p>Class/id 的<code>firstname</code>是当前组建的名称，随后我们需要为该 class/id 添加<code>element</code>和<code>modifiers</code>，我们会通过一个下划线来连接<code>firstname</code>和<code>element</code>，我们会通过两个下划线来将<code>modifiers</code>和其他进行连接。</p>
+<p>如果我们有一个组件，并且想要将组件的<code>header</code>部分从活动状态更改为非活动状态，则当此组件处于非活动状态时，我们需要向该组件添加一个的 class。 因此，此类名称将为<code>component_header__inactive</code>，同时 class 和 id 的命名均以小写字母开头。</p>
+<h3>CSS 中 rem 的强制使用</h3>
+<p>在项目上线后，我们需要根据不同的屏幕尺寸来对前端的尺寸进行等比缩放，这时候就需要通过调节 html 中的 font-size 来进行等比缩放，这一缩放机制是通过 rem 来实现的，所以在开发的过程中<code>禁止使用px</code>做为单位，任何时候都需要以<code>rem</code>做为尺寸单位。项目中<code>rem</code>和<code>px</code>的换算单位为<code>1rem</code> 等于<code>10px</code>。</p>
+<h3>项目中图片命名规范</h3>
+<hr>
+<p>在项目中引入的图片需统一命名后放在<code>src/Assets/images</code>文件夹下，命名规则为<code>图片功能类别__图片名称</code></p>
+<p>例如：icon_userAvata 则代表着用户的头像图表， logo_menu 则代表着在菜单栏中所用到的 logo 图标，spr_blogCard 则代表着博客页面中卡片元素所使用的图片。</p>
+<ul>
+<li>
+<p>图片功能类别</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">图片功能类别</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">icon</td>
+<td style="text-align:left">项目中 fontawesome 没有包含的 icon</td>
+</tr>
+<tr>
+<td style="text-align:left">logo</td>
+<td style="text-align:left">Logo 类图片</td>
+</tr>
+<tr>
+<td style="text-align:left">bg</td>
+<td style="text-align:left">可平铺或大背景图</td>
+</tr>
+<tr>
+<td style="text-align:left">btn</td>
+<td style="text-align:left">按钮</td>
+</tr>
+<tr>
+<td style="text-align:left">spr</td>
+<td style="text-align:left">单页面中各种其他图片命名集合</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>图片名称
+图片名称需要根据图片使用的场景命名，例如用户头像：userAvatar， 商品列表：productList 等。</p>
+</li>
+</ul>
+<h3>变量，常量，函数和类的命名规范</h3>
+<hr>
+<p>项目中对于变量，常量，函数和类的命名极其重要，这可以快速帮助你团队中的成员了解到你所写的代码的含义。</p>
+<ul>
+<li>
+<p>变量</p>
+<p>命名方法：小驼峰命名法。<br>
+命名规范：前缀为名词</p>
+<pre><code class="language-javascript">let maxCount = 10;
+</code></pre>
+</li>
+<li>
+<p>常量
+命名方法：小驼峰命名法。<br>
+命名规范：前缀为名词</p>
+<pre><code class="language-javascript">const maxCount = 10;
+</code></pre>
+</li>
+<li>
+<p>函数
+命名方法：小驼峰命名法。<br>
+命名规范：前缀应当为动词<br>
+命名建议前缀：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">动词</th>
+<th style="text-align:left">含义</th>
+<th style="text-align:left">返回值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">handle</td>
+<td style="text-align:left">处理 event 事件的函数</td>
+<td style="text-align:left">可返回任意值或者无返回值</td>
+</tr>
+<tr>
+<td style="text-align:left">is</td>
+<td style="text-align:left">判断真假</td>
+<td style="text-align:left">返回一个布尔值</td>
+</tr>
+<tr>
+<td style="text-align:left">get</td>
+<td style="text-align:left">获取某个值</td>
+<td style="text-align:left">返回一个非布尔值</td>
+</tr>
+<tr>
+<td style="text-align:left">set</td>
+<td style="text-align:left">设置某个值</td>
+<td style="text-align:left">无返回值</td>
+</tr>
+<tr>
+<td style="text-align:left">load</td>
+<td style="text-align:left">加载某些参数</td>
+<td style="text-align:left">无返回值或者返回是否加载完成的结果</td>
+</tr>
+<tr>
+<td style="text-align:left">remove</td>
+<td style="text-align:left">移除某些样式或移除某些参数</td>
+<td style="text-align:left">可返回任意值或无返回值</td>
+</tr>
+<tr>
+<td style="text-align:left">add</td>
+<td style="text-align:left">添加某些样式或者添加某些参数</td>
+<td style="text-align:left">可返回任意值或无返回值</td>
+</tr>
+<tr>
+<td style="text-align:left">change</td>
+<td style="text-align:left">修改某些样式或者修改某些参数</td>
+<td style="text-align:left">可返回任意值或无返回值</td>
+</tr>
+<tr>
+<td style="text-align:left">watch</td>
+<td style="text-align:left">监听某一函数或事件</td>
+<td style="text-align:left">可返回任意值或无返回值</td>
+</tr>
+<tr>
+<td style="text-align:left">dispatch</td>
+<td style="text-align:left">发送某一 action</td>
+<td style="text-align:left">返回一个对象</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>类
+命名方法：大驼峰命名法<br>
+命名规范：前缀为类的名称</p>
+<pre><code class="language-javascript">class Person {
+public name: string;
+constructor(name) {
+  this.name = name;
+}
+}
+const person = new Person('弗兰克');
+</code></pre>
+</li>
+</ul>
+<h3>代码规范注释</h3>
+<hr>
+<h4>顶层/文件注释</h4>
+<p>顶级注释用于告诉不熟悉此代码的读者此文件中包含的内容。 应提供文件的一般内容，其作者，依赖关系和其他相关信息。</p>
+<pre><code class="language-javascript">/**
+ * @file 文件的描述
+ * @date 2020/06/25 13:11
+ * @author 作者的名字
+ * @lastModify 作者的名字 2020/06/25 14:11
+ */
+</code></pre>
+<h4>方法与函数的注释</h4>
+<p>@param 标签提供了函数参数的各种描述，包括参数名称，参数数据类型和描述。 @param {变量类型}变量名-变量描述<br>
+例如: <br>
+@params {string | Number}<br>
+@callback 回调函数的描述.<br>
+@returns 函数 return 值的描述。</p>
+<pre><code class="language-javascript">/**
+ * 发送一个post请求
+ * @param {string} url - 请求的 url
+ * @param {string} method - 请求的方法
+ * @param {Object} body - 请求的body
+ * @callback successCallBack-requestSuccessCallBack - 请求成功的回调函数
+ * @callback errorCallBack-requestErrorCallBack - 请求失败的回调函数
+ * @returns {Promise.&lt;*&gt;} - 返回值
+ */
+const requestUrl = async (url, method, body, successCallBack, errorCallBack) =&gt; {
+    reurn new Promise...
+};
+</code></pre>
+<h4>变量与属性的注释</h4>
+<p>@type 用于标识标识符可能包含的值的类型或函数返回的值的类型。</p>
+<pre><code class="language-javascript">/**
+ * 变量描述
+ * @let
+ * @type {number)}
+ */
+let foo = 1;
+</code></pre>
+<h4>定量注释</h4>
+<pre><code class="language-javascript">/**
+ * 定量描述
+ * @constant
+ * @type {string}
+ *
+ */
+const RED = "FF0000";
+</code></pre>
+<h2>Code Snippet 模版</h2>
+<h3>使用方法</h3>
+<p>同时按下 command + shift + p，随后将下列模版拷贝粘贴到 typescript 和 typescript react 模版中即可使用。</p>
+<h3>typescript react 模版</h3>
+<p>typescript.json snippet</p>
+<pre><code class="language-javascript">{
+  // Place your snippets for typescript here. Each snippet is defined under a snippet name and has a prefix, body and
+  // description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+  // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the
+  // same ids are connected.
+  // Example:
+  "Print to console": {
+    "prefix": "log",
+    "body": ["console.log('$1');", "$2"],
+    "description": "Log output to console"
+  },
+  "common header part": {
+    "prefix": "ch",
+    "body": [
+      "/**",
+      "* @file $1",
+      "* @date $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE",
+      "* @author $2",
+      "* @lastModify $2 $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE",
+      "*/"
+    ],
+    "description": "project common header part"
+  },
+  "common body part": {
+    "prefix": "cb",
+    "body": ["/**", "* $1", "* @param {$2} $3", "*/"],
+    "description": "project common header part"
+  },
+  "common jsx divider part": {
+    "prefix": "cxd",
+    "body": [
+      "{/* &lt;------------------------------------ **** $1 START **** ------------------------------------ */}",
+      "{/* &lt;------------------------------------ **** $1 END **** ------------------------------------ */}"
+    ],
+    "description": "jsx common divider part"
+  },
+  "common divider part": {
+    "prefix": "cd",
+    "body": [
+      "/* &lt;------------------------------------ **** $1 START **** ------------------------------------ */",
+      "/* &lt;------------------------------------ **** $1 END **** ------------------------------------ */"
+    ],
+    "description": " common divider part"
+  },
+  "common divider short part": {
+    "prefix": "cds",
+    "body": [
+      "/* &lt;--------------------------- * $1 START * --------------------------- */",
+      "/* --------------------------- * $1 END * --------------------------- */"
+    ],
+    "description": " common divider part"
+  },
+  "common const": {
+    "prefix": "cc",
+    "body": ["/**", "* $1", "* @constant", "* @type {$2}", "*/"],
+    "description": " const common"
+  },
+  "common let": {
+    "prefix": "ct",
+    "body": ["/**", "* $1", "* @let", "* @type {$2}", "*/"],
+    "description": " const let"
+  },
+  "react jsx templete": {
+    "prefix": "rt",
+    "body": [
+      "/**",
+      "* @file $2",
+      "* @date $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE",
+      "* @author $3",
+      "* @lastModify $3 $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE",
+      "*/",
+      "/* &lt;------------------------------------ **** DEPENDENCE IMPORT START **** ------------------------------------ */",
+      "/** This section will include all the necessary dependence for this tsx file */",
+      "import React, { useState } from 'react';",
+      "import { Row, Col } from 'antd';",
+      "/* &lt;------------------------------------ **** DEPENDENCE IMPORT END **** ------------------------------------ */",
+
+      "/* &lt;------------------------------------ **** INTERFACE START **** ------------------------------------ */",
+      "/** This section will include all the interface for this tsx file */",
+
+      "/* &lt;------------------------------------ **** INTERFACE END **** ------------------------------------ */",
+
+      "/* &lt;------------------------------------ **** FUNCTION COMPONENT START **** ------------------------------------ */",
+      "const $1 = (): JSX.Element =&gt; {",
+      "/* &lt;------------------------------------ **** STATE START **** ------------------------------------ */",
+      "/************* This section will include this component HOOK function *************/",
+
+      "/* &lt;------------------------------------ **** STATE END **** ------------------------------------ */",
+
+      "/* &lt;------------------------------------ **** PARAMETER START **** ------------------------------------ */",
+      "/************* This section will include this component parameter *************/",
+
+      "/* &lt;------------------------------------ **** PARAMETER END **** ------------------------------------ */",
+
+      "/* &lt;------------------------------------ **** FUNCTION START **** ------------------------------------ */",
+      "/************* This section will include this component general function *************/",
+
+      "/* &lt;------------------------------------ **** FUNCTION END **** ------------------------------------ */",
+      "return (",
+      "&lt;Row&gt;",
+      "&lt;/Row&gt;",
+      ");",
+      "};",
+      "export default $1;",
+      "/* &lt;------------------------------------ **** FUNCTION COMPONENT END **** ------------------------------------ */"
+    ],
+    "description": "react JSX templete"
+  }
+}
+
+</code></pre>
+<h3>SCSS 模版</h3>
+<p>scss.json snippet</p>
+<pre><code class="language-javascript">{
+  // Place your snippets for typescript here. Each snippet is defined under a snippet name and has a prefix, body and
+  // description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+  // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the
+  // same ids are connected.
+  // Example:
+  "Print to console": {
+    "prefix": "log",
+    "body": ["console.log('$1');", "$2"],
+    "description": "Log output to console"
+  },
+  "common header part": {
+    "prefix": "ch",
+    "body": [
+      "/**",
+      "* @file $1",
+      "* @date $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE",
+      "* @author $2",
+      "* @lastModify $2 $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE",
+      "*/"
+    ],
+    "description": "project common header part"
+  },
+  "common body part": {
+    "prefix": "cb",
+    "body": ["/**", "* $1", "* @param {$2} $3", "*/"],
+    "description": "project common header part"
+  },
+  "common jsx divider part": {
+    "prefix": "cxd",
+    "body": [
+      "{/* &lt;------------------------------------ **** $1 START **** ------------------------------------ */}",
+      "{/* &lt;------------------------------------ **** $1 END **** ------------------------------------ */}"
+    ],
+    "description": "jsx common divider part"
+  },
+  "common divider part": {
+    "prefix": "cd",
+    "body": [
+      "/* &lt;------------------------------------ **** $1 START **** ------------------------------------ */",
+      "/* &lt;------------------------------------ **** $1 END **** ------------------------------------ */"
+    ],
+    "description": " common divider part"
+  },
+  "common divider short part": {
+    "prefix": "cds",
+    "body": [
+      "/* &lt;--------------------------- * $1 START * --------------------------- */",
+      "/* --------------------------- * $1 END * --------------------------- */"
+    ],
+    "description": " common divider part"
+  },
+  "media queriy max": {
+    "prefix": "mm",
+    "body": ["@media screen and (max-width: $1) {", "}"],
+    "description": " media screen less than style"
+  },
+  "media queriy min": {
+    "prefix": "mi",
+    "body": ["@media screen and (min-width: $1) {", "}"],
+    "description": " media screen more than style"
+  },
+  "scss templete": {
+    "prefix": "st",
+    "body": [
+      "/**",
+      "* @file $2",
+      "* @date $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE",
+      "* @author $3",
+      "* @lastModify $3 $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE",
+      "*/",
+      "/* &lt;------------------------------------ **** CONSTANT IMPORT START **** ------------------------------------ */",
+      "/** Import all the reference constant after this line */",
+      "@import '../../Constant/breakPoint.scss';",
+      "@import '../../Constant/font.scss';",
+      "@import '../../Constant/color.scss';",
+      "/* &lt;------------------------------------ **** CONSTANT IMPORT END **** ------------------------------------ */",
+      "/* &lt;------------------------------------ **** SECTION1 MIXIN START **** ------------------------------------ */",
+      "/** The demo mixin is ..........*/",
+      "@mixin demo {}",
+      "/* &lt;------------------------------------ **** SECTION1 MIXIN END **** ------------------------------------ */",
+      "/* &lt;--------------------------- * SECTION1 * --------------------------- */",
+      "/* &lt;--------------------------- * SECTION1 * --------------------------- */"
+    ],
+    "description": " media screen more than style"
+  }
+}
+
+</code></pre>
+<div class="xl-chrome-ext-bar" id="xl_chrome_ext_{4DB361DE-01F7-4376-B494-639E489D19ED}" style="display: none;">
+      <div class="xl-chrome-ext-bar__logo"></div>
+
+      <a id="xl_chrome_ext_download" href="javascript:;" class="xl-chrome-ext-bar__option">下载视频</a>
+      <a id="xl_chrome_ext_close" href="javascript:;" class="xl-chrome-ext-bar__close"></a>
+    </div></body></html>
